@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"io/ioutil"
@@ -10,11 +10,11 @@ func getBaseDirectory() string {
 	return path
 }
 
-func getFilePath(fileName string) string {
+func GetFilePath(fileName string) string {
 	return getBaseDirectory() + "/resources/" + fileName
 }
 
-func appendToFile(filePath string, msg string) error {
+func AppendToFile(filePath string, msg string) error {
 	f, _ := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 
 	_, err := f.WriteString(msg + "\n")
@@ -31,13 +31,13 @@ func appendToFile(filePath string, msg string) error {
 	return nil
 }
 
-func readFileContent(filePath string) string {
+func ReadFileContent(filePath string) string {
 	content, _ := ioutil.ReadFile(filePath)
 
 	return string(content)
 }
 
-func flushFileContent(filePath string) error {
-	_, err := os.Create(getFilePath(dataFileName))
+func FlushFileContent(filePath string) error {
+	_, err := os.Create(filePath)
 	return err
 }

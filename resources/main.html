@@ -4,7 +4,45 @@
     <title>Title of the document</title>
 </head>
 <body>
-    The content of the document......
+<button id="open">Open connection</button>
+<button id="close">Close connection</button>
+<div id="output"></div>
+<script>
+    window.addEventListener("load", function(evt) {
+        var output = document.getElementById("output");
+        var ws;
+
+        document.getElementById("open").onclick = function() {
+            if (ws && !ws.closed) {
+                return false;
+            }
+
+            ws = new WebSocket("ws://localhost:8090/ws-connection");
+            ws.onopen = function(evt) {
+                console.log("websocket opened!");
+            }
+            ws.onclose = function(evt) {
+                console.log("websocket closing...");
+                ws = null;
+            }
+            ws.onmessage = function(evt) {
+                console.log("response: " + evt.data);
+                output.innerHTML += evt.data;
+            }
+            ws.onerror = function(evt) {
+                console.log("error: " + evt.data);
+            }
+            return false;
+        };
+        document.getElementById("close").onclick = function(evt) {
+            if (!ws) {
+                return false;
+            }
+            ws.close();
+            return false;
+        };
+    });
+</script>
 </body>
 
 </html>
