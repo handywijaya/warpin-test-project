@@ -5,13 +5,13 @@ import (
 	"os"
 )
 
-func getBaseDirectory() string {
+func GetBaseDirectory() string {
 	path, _ := os.Getwd()
 	return path
 }
 
 func GetFilePath(fileName string) string {
-	return getBaseDirectory() + "/resources/" + fileName
+	return GetBaseDirectory() + "/" + "resources" + "/" + fileName
 }
 
 func AppendToFile(filePath string, msg string) error {
